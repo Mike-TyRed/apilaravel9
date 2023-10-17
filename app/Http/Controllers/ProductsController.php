@@ -21,13 +21,11 @@ class ProductsController extends Controller
         $validar = $this->validar($request->all());
         if (!is_array($validar)) {
             Products::create($request->all());
-            array_push($respuesta,['status'=>'success']);
+            array_push($respuesta, ['status' => 'success']);
             return response()->json($respuesta);
-        }
-        else {
+        } else {
             return response()->json($validar);
         }
-        
     }
 
     public function show($id)
@@ -40,19 +38,17 @@ class ProductsController extends Controller
     {
         $respuesta = [];
         $validar = $this->validar($request->all());
-        if (!is_array($validar)){
+        if (!is_array($validar)) {
             $product = Products::find($id);
-            if($product){
+            if ($product) {
                 $product->fill($request->all())->save();
                 array_push($respuesta, ['status' => 'sucess']);
-            }
-            else{
+            } else {
                 array_push($respuesta, ['status' => 'error']);
-                array_push($respuesta, ['errors' =>['id' => 'No existe el ID']]);
+                array_push($respuesta, ['errors' => ['id' => 'No existe el ID']]);
             }
             return response()->json($respuesta);
-        }
-        else{
+        } else {
             return response()->json($validar);
         }
     }
@@ -61,13 +57,13 @@ class ProductsController extends Controller
     {
         $respuesta = [];
         $product = Products::find($id);
-        if($product){
+        if ($product) {
             $product->delete();
             array_push($respuesta, ['status' => 'success']);
-        }
-        else{
+        } else {
             array_push($respuesta, ['status' => 'error']);
-            array_push($respuesta, ['errors' => 'No existe el ID']);        }
+            array_push($respuesta, ['errors' => 'No existe el ID']);
+        }
     }
 
     public function validar($parametros)
